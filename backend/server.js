@@ -22,8 +22,10 @@ app.use(
 
 /* ===== MIDDLEWARE ===== */
 app.use(express.json());
-
-/* ===== ROUTES ===== */
+app.use("/",(req,res)=>{
+  res.send("server started...")
+})
+/* ===== ROUTES ====a= */
 app.use("/api/auth", authRoutes);
 
 app.get("/api", (req, res) => {
