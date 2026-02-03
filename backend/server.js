@@ -22,9 +22,10 @@ app.use(
 
 /* ===== MIDDLEWARE ===== */
 app.use(express.json());
-app.use("/",(req,res)=>{
-  res.send("server started...")
-})
+app.get("/", (req, res) => {
+  res.send("SaaS Backend API is running 🚀");
+});
+
 /* ===== ROUTES ====a= */
 app.use("/api/auth", authRoutes);
 
