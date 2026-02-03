@@ -10,13 +10,12 @@ Admins can create projects and assign tasks, while members can track and complet
 ## 🌐 Live Demo
 
 🔹 **Frontend (Netlify)**
-```bash  
+  
 https://saasapplication.netlify.app
-```
+
 🔹 **Backend API (Render)**  
-```bash
 https://saas-5h5r.onrender.com
-```
+
 ---
 
 ## 🛠️ Tech Stack
