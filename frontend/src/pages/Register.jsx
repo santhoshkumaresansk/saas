@@ -20,12 +20,13 @@ const Register = () => {
             alert("Registration successful! Please login.");
             navigate("/login");
 
-        } catch (err) {
-            alert(
-                err.response?.data?.message ||
-                "Registration failed"
-            );
+        } catch (error) {
+            const msg =
+                error.response?.data?.message || "Registration failed.";
+
+            alert(msg);
         }
+
     };
 
     return (

@@ -19,12 +19,14 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(res.data.user));
             navigate("/dashboard");
 
-        } catch (err) {
-            alert(
-                err.response?.data?.message ||
-                "Invalid email or password"
-            );
         }
+        catch (error) {
+            const msg =
+                error.response?.data?.message || "Login failed. Try again.";
+
+            alert(msg);
+        }
+
 
     };
 
