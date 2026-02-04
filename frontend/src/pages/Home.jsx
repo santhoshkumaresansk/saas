@@ -3,48 +3,71 @@ import API from "../services/api";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [apiStatus, setApiStatus] = useState("");
+  const [apiStatus, setApiStatus] = useState("connecting");
 
   useEffect(() => {
     const checkAPI = async () => {
       try {
-        const res = await API.get("/");
-        setApiStatus(res.data);
-      } catch {
-        setApiStatus("Backend not reachable");
+        await API.get("/");
+        setApiStatus("running");
+      } catch (err) {
+        setApiStatus("error");
       }
     };
+
     checkAPI();
   }, []);
 
+  const renderStatus = () => {
+    if (apiStatus === "connecting") {
+      return (
+        <span className="text-yellow-400">
+          Connecting to API… please wait ⏳
+        </span>
+      );
+    }
+    if (apiStatus === "running") {
+      return (
+        <span className="text-green-400">
+          API is running 🚀
+        </span>
+      );
+    }
+    return (
+      <span className="text-red-400">
+        Backend not reachable ❌
+      </span>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4">
-      <div className="max-w-xl text-center">
-        <h1 className="text-4xl font-bold text-amber-400 mb-4">
-          SaaS Project Manager
-        </h1>
-        <p className="text-gray-400 mb-6">
-          Manage projects and tasks like a real product team.
-        </p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+      <h1 className="text-4xl font-bold text-yellow-400 mb-2">
+        SaaS Project Manager
+      </h1>
 
-        <p className="text-sm text-gray-500 mb-8">
-          API Status: <span className="text-amber-400">{apiStatus}</span>
-        </p>
+      <p className="text-slate-300 mb-4">
+        Manage projects and tasks like a real product team.
+      </p>
 
-        <div className="flex justify-center gap-4">
-          <Link
-            to="/login"
-            className="bg-amber-500 text-black px-6 py-2 rounded-lg font-semibold"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="border border-amber-500 text-amber-400 px-6 py-2 rounded-lg"
-          >
-            Register
-          </Link>
-        </div>
+      <p className="mb-6">
+        API Status: {renderStatus()}
+      </p>
+
+      <div className="flex gap-4">
+        <Link
+          to="/login"
+          className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg font-semibold"
+        >
+          Login
+        </Link>
+
+        <Link
+          to="/register"
+          className="border border-yellow-500 text-yellow-400 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-black transition"
+        >
+          Register
+        </Link>
       </div>
     </div>
   );
