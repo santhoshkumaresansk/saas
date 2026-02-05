@@ -21,11 +21,13 @@ const Register = () => {
             navigate("/login");
 
         } catch (error) {
-            const msg =
-                error.response?.data?.message || "Registration failed.";
-
-            alert(msg);
+            if (error.response && error.response.data?.message) {
+                alert(error.response.data.message);
+            } else {
+                alert("Registration failed. Please try again.");
+            }
         }
+
 
     };
 

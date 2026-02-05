@@ -21,10 +21,11 @@ const Login = () => {
 
         }
         catch (error) {
-            const msg =
-                error.response?.data?.message || "Login failed. Try again.";
-
-            alert(msg);
+            if (error.response && error.response.data?.message) {
+                alert(error.response.data.message);
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
         }
 
 
