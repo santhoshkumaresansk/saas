@@ -31,19 +31,39 @@ exports.register = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({ message: "Email not found. Please register first." });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        message: "Email not registered. Please register first."
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Incorrect password. Please check your password."
+      });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.status(401).json({ message: "Incorrect password. Please try again." });
-  }
-
-  const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
-  res.json({ token, user });
 };
 
