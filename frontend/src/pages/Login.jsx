@@ -24,7 +24,7 @@ const Login = () => {
             if (error.response && error.response.data?.message) {
                 alert(error.response.data.message);
             } else {
-                alert("Something went wrong. Please try again.");
+                alert("Something Now went wrong. Please try again.");
             }
         }
 

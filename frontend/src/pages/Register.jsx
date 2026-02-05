@@ -24,7 +24,7 @@ const Register = () => {
             if (error.response && error.response.data?.message) {
                 alert(error.response.data.message);
             } else {
-                alert("Registration failed. Please try again.");
+                alert("Registration Now failed. Please try again.");
             }
         }
 
